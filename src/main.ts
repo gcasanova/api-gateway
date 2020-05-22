@@ -17,7 +17,8 @@ async function bootstrap() {
       app.useGlobalGuards(new AuthGuard(reflector, new JwtAuthGuard(), new LocalAuthGuard()));
   }
 
-  await app.listen(3000);
+  const appPort = configService.get<number>('APP_PORT', 3000);
+  await app.listen(appPort);
 }
 
 bootstrap();
