@@ -5,21 +5,21 @@ import { PassportModule } from '@nestjs/passport';
 import { UsersModule } from '../users/users.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
-import { ApiConfigModule } from '../config/api-config.module';
-import { ApiConfigService } from '../config/api-config.service';
+import { AppConfigModule } from '../config/app-config.module';
+import { AppConfigService } from '../config/app-config.service';
 
 @Module({
   imports: [
     UsersModule,
     PassportModule,
-    ApiConfigModule,
+    AppConfigModule,
     JwtModule.registerAsync({
-      imports: [ApiConfigModule],
-      useFactory: async (apiConfigService: ApiConfigService) => ({
-        secret: apiConfigService.getAuthSecret,
-        signOptions: { expiresIn: `${apiConfigService.getAuthTokenExpirationInSeconds}s` },
+      imports: [AppConfigModule],
+      useFactory: async (appConfigService: AppConfigService) => ({
+        secret: appConfigService.getAuthSecret,
+        signOptions: { expiresIn: `${appConfigService.getAuthTokenExpirationInSeconds}s` },
       }),
-      inject: [ApiConfigService],
+      inject: [AppConfigService],
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],

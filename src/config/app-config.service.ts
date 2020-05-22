@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class ApiConfigService {
+export class AppConfigService {
   constructor(private configService: ConfigService) {}
 
   get isAuthEnabled(): boolean {
@@ -19,5 +19,9 @@ export class ApiConfigService {
 
   get getAuthTokenExpirationInSeconds(): number {
     return this.configService.get<number>('AUTH_TOKEN_EXPIRATION_SECONDS', 1800);
+  }
+
+  get getLogLevel(): string {
+    return this.configService.get<string>('LOG_LEVEL', 'info');
   }
 }
