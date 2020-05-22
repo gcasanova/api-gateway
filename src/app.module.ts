@@ -1,3 +1,4 @@
+import Joi from '@hapi/joi';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -14,6 +15,11 @@ import { CompaniesModule } from './companies/companies.module';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `./config/.${process.env.NODE_ENV}.env`,
+      validationSchema: Joi.object({
+        NODE_ENV: Joi.string()
+          .valid('development', 'production', 'test', 'provision')
+          .required(),
+      }),
     }),
     GraphQLModule.forRoot({
       context: ({ req }) => ({ req }),
