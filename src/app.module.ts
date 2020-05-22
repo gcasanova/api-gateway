@@ -5,20 +5,23 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
 import { UsersModule } from './users/users.module';
-import { ApiConfigService } from './api-config.service';
+import { ApiConfigModule } from './config/api-config.module';
 import { CompaniesModule } from './companies/companies.module';
 
 @Module({
   imports: [
     AuthModule,
-    CompaniesModule,
     UsersModule,
+    CompaniesModule,
+    ApiConfigModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `./config/.${process.env.NODE_ENV}.env`,
       validationSchema: Joi.object({
         NODE_ENV: Joi.string()
           .valid('development', 'testing', 'staging', 'production')
+          .required(),
+        AUTH_SECRET: Joi.string()
           .required(),
       }),
     }),
@@ -31,6 +34,5 @@ import { CompaniesModule } from './companies/companies.module';
     }),
   ],
   controllers: [AppController],
-  providers: [ApiConfigService],
 })
 export class AppModule {}

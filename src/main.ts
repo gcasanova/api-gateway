@@ -2,8 +2,8 @@ import { Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 import { AuthGuard } from './auth/guards/auth.guard';
-import { ApiConfigService } from './api-config.service';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { ApiConfigService } from './config/api-config.service';
 import { LocalAuthGuard } from './auth/guards/local-auth.guard';
 
 async function bootstrap() {
