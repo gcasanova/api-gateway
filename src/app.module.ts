@@ -17,7 +17,7 @@ import { CompaniesModule } from './companies/companies.module';
       envFilePath: `./config/.${process.env.NODE_ENV}.env`,
       validationSchema: Joi.object({
         NODE_ENV: Joi.string()
-          .valid('development', 'production', 'test', 'provision')
+          .valid('development', 'testing', 'staging', 'production')
           .required(),
       }),
     }),
