@@ -1,24 +1,20 @@
 import { Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
-import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from './auth/guards/auth.guard';
+import { ApiConfigService } from './api-config.service';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { LocalAuthGuard } from './auth/guards/local-auth.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const configService = app.get<ConfigService>(ConfigService);
+  const apiConfigService = app.get<ApiConfigService>(ApiConfigService);
 
-  const isAuthenticationEnabled = configService.get<boolean>('AUTHENTICATION_ENABLED', true);
+  apiConfigService.isAuthEnabled ?
+    app.useGlobalGuards(new AuthGuard(app.get(Reflector), new JwtAuthGuard(), new LocalAuthGuard())) :
+    console.log('Authentication disabled!');
 
-  if (isAuthenticationEnabled) {
-      const reflector = app.get(Reflector);
-      app.useGlobalGuards(new AuthGuard(reflector, new JwtAuthGuard(), new LocalAuthGuard()));
-  }
-
-  const appPort = configService.get<number>('APP_PORT', 3000);
-  await app.listen(appPort);
+  await app.listen(apiConfigService.getAppPort);
 }
 
 bootstrap();

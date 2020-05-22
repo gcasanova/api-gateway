@@ -5,6 +5,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { AuthModule } from './auth/auth.module';
 import { AppController } from './app.controller';
 import { UsersModule } from './users/users.module';
+import { ApiConfigService } from './api-config.service';
 import { CompaniesModule } from './companies/companies.module';
 
 @Module({
@@ -29,6 +30,7 @@ import { CompaniesModule } from './companies/companies.module';
       },
     }),
   ],
-  controllers: [AppController]
+  controllers: [AppController],
+  providers: [ApiConfigService],
 })
 export class AppModule {}
