@@ -1,6 +1,6 @@
 ## Description
 
-Nestjs application for a GraphQL API gateway with built-in authentication.
+Nestjs application for a GraphQL API gateway with built-in authentication. (WORK IN PROGRESS)
 
 ## Running the app
 
