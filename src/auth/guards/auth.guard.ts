@@ -1,15 +1,15 @@
 import { Observable } from 'rxjs';
 import { Reflector } from '@nestjs/core';
-import { JwtAuthGuard } from './jwt-auth.guard';
-import { LocalAuthGuard } from './local-auth.guard';
+import { LoginGuard } from './login.guard';
+import { AuthenticatedGuard } from './authenticated.guard';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 	public constructor(
-        private readonly reflector: Reflector,
-        private readonly jwtAuthGuard: JwtAuthGuard,
-        private readonly localAuthGuard: LocalAuthGuard) {
+		private readonly reflector: Reflector,
+		private readonly loginGuard: LoginGuard,
+        private readonly authenticatedGuard: AuthenticatedGuard) {
 	}
 
 	public canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
@@ -22,8 +22,8 @@ export class AuthGuard implements CanActivate {
         const isLogin = this.reflector.get<boolean>('isLogin', context.getHandler());
 
 		if (isLogin) {
-			return this.localAuthGuard.canActivate(context);
+			return this.loginGuard.canActivate(context);
 		}
-		return this.jwtAuthGuard.canActivate(context);
+		return this.authenticatedGuard.canActivate(context);
 	}
 }

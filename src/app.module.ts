@@ -58,7 +58,11 @@ import { AppConfigService } from './config/app-config.service';
         NODE_ENV: Joi.string()
           .valid('development', 'testing', 'staging', 'production')
           .required(),
-        AUTH_SECRET: Joi.string()
+        AUTH_SESSION_SECRET: Joi.string()
+          .required(),
+        REDIS_HOST: Joi.string()
+          .required(),
+        REDIS_DB_NUMBER_SESSIONS: Joi.string()
           .required(),
       }),
     }),

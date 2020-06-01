@@ -6,22 +6,38 @@ export class AppConfigService {
   constructor(private configService: ConfigService) {}
 
   get isAuthEnabled(): boolean {
-    return this.configService.get<boolean>('AUTH_ENABLED', true);
+    return this.configService.get<string>('AUTH_ENABLED', 'true') === 'true';
   }
 
   get getAppPort(): number {
-    return this.configService.get<number>('APP_PORT', 3000);
+    return Number(this.configService.get<number>('APP_PORT', 3000));
   }
 
-  get getAuthSecret(): string {
-    return this.configService.get<string>('AUTH_SECRET');
+  get getAuthSessionSecret(): string {
+    return this.configService.get<string>('AUTH_SESSION_SECRET');
   }
 
-  get getAuthTokenExpirationInSeconds(): number {
-    return this.configService.get<number>('AUTH_TOKEN_EXPIRATION_SECONDS', 1800);
+  get getAuthSessionCookieName(): string {
+    return this.configService.get<string>('AUTH_SESSION_COOKIE_NAME', 'sid');
+  }
+
+  get getAuthSessionCookieSecure(): boolean {
+    return this.configService.get<string>('AUTH_SESSION_COOKIE_SECURE', 'true') === 'true';
+  }
+
+  get getAuthSessionCookieMaxAgeInMilliseconds(): number {
+    return Number(this.configService.get<number>('AUTH_SESSION_COOKIE_MAX_AGE_MILLISECONS', 1800000));
   }
 
   get getLogLevel(): string {
     return this.configService.get<string>('LOG_LEVEL', 'info');
+  }
+
+  get getRedisDbNumberSessions(): number {
+    return Number(this.configService.get<number>('REDIS_DB_NUMBER_SESSIONS'));
+  }
+
+  get getRedisHost(): string {
+    return this.configService.get<string>('REDIS_HOST');
   }
 }
