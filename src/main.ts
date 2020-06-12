@@ -5,7 +5,6 @@ import connectRedis from 'connect-redis';
 import { AppModule } from './app.module';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { NestFactory, Reflector } from '@nestjs/core';
-import { LoginGuard } from './auth/guards/login.guard';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { AppConfigService } from './config/app-config.service';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -47,7 +46,7 @@ async function bootstrap() {
   const logger = app.get(WINSTON_MODULE_NEST_PROVIDER);
 
   appConfigService.isAuthEnabled ?
-    app.useGlobalGuards(new AuthGuard(app.get(Reflector), new LoginGuard(), new AuthenticatedGuard())) :
+    app.useGlobalGuards(new AuthGuard(app.get(Reflector), new AuthenticatedGuard())) :
     logger.warn('Authentication disabled!');
 
   await app.listen(appConfigService.getAppPort);

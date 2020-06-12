@@ -13,6 +13,9 @@ export class User {
   lastName?: string;
 
   @Field({ nullable: true })
+  email: string
+
+  @Field({ nullable: true })
   password: string;
 
   @Field(type => Company)

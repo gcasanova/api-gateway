@@ -15,6 +15,5 @@ export class CompaniesResolver {
     company.name = 'harmony';
 
     return company;
-    //return this.usersService.findOneById(id);
   }
 }

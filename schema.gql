@@ -11,6 +11,7 @@ type User {
   id: String!
   firstName: String
   lastName: String
+  email: String
   password: String
   company: Company!
 }
@@ -18,4 +19,8 @@ type User {
 type Query {
   company(id: String!): Company!
   user(id: String!): User!
+}
+
+type Mutation {
+  login(password: String!, email: String!): User!
 }
