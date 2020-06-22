@@ -9,11 +9,7 @@ export class CompaniesResolver {
   ) {}
 
   @Query(returns => Company, { name: 'company'})
-  async getCompany(@Args('id') id: string) {
-    const company = new Company();
-    company.id = '4ba0b5f0-9906-11ea-bb37-0242ac130002';
-    company.name = 'harmony';
-
-    return company;
+  getCompany(@Args('id') id: string): Promise<Company> {
+    return this.companiesService.findById(id);
   }
 }
